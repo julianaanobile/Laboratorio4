@@ -2,7 +2,6 @@
 
 
 import java.util.Arrays;
-import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
