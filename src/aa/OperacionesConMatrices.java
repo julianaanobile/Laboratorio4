@@ -3,6 +3,7 @@ package aa;
 
 import java.util.Arrays;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 
 
 public class OperacionesConMatrices {
@@ -11,17 +12,54 @@ public class OperacionesConMatrices {
     int n;
     int[][] matrizA;
     int[][] matrizAT;
+    boolean esDiagonal;
+    boolean esSimetrica;
 
     public OperacionesConMatrices() {
+        JTextArea jTextArea = new JTextArea();
+        String stringMatrizA = "";
+        String stringMatrizAT = "";
+        
         crearMatrizA();
         crearMatrizAT();
-        for (int i = 0; i < matrizA.length; i++) {
-            System.out.println(Arrays.toString(matrizA[i]));
+        verificarDiagonalYSimetria();
+        
+        
+        stringMatrizA = imprimirMatrizA();
+        stringMatrizAT = imprimirMatrizAT();
+        
+        jTextArea.append("   ***Programa Matrices***\n\n");
+        jTextArea.append("Matriz A:\n");
+        jTextArea.append(stringMatrizA);
+        if(esDiagonal){
+            jTextArea.append("\nLa Matriz A ES una Matriz Diagonal");
+        }else{
+            jTextArea.append("\nLa Matriz A NO es una Matriz Diagonal");
         }
-        System.out.println("\n");
+        jTextArea.append("\n\nMatriz Traspuesta:\n");
+        jTextArea.append(stringMatrizAT);
+        if(esSimetrica){
+            jTextArea.append("\nLa Matriz A ES una Matriz Simetrica\n");
+        }else{
+            jTextArea.append("\nLa Matriz A NO es una Matriz Simetrica\n");
+        }
+        JOptionPane.showMessageDialog(null, jTextArea);
+    }
+
+    private String imprimirMatrizAT() {
+        String result = "";
         for (int i = 0; i < matrizAT.length; i++) {
-            System.out.println(Arrays.toString(matrizAT[i]));
+            result = result +  Arrays.toString(matrizAT[i]) + "\n";
         }
+        return result;
+    }
+
+    private String imprimirMatrizA() {
+        String result = "";
+        for (int i = 0; i < matrizA.length; i++) {
+            result = result + Arrays.toString(matrizA[i]) + "\n";
+        }
+        return result;
     }
 
     private void crearMatrizA() {
@@ -44,7 +82,27 @@ public class OperacionesConMatrices {
         }
     }
 
+     private void verificarDiagonalYSimetria() {
+         esDiagonal = true;
+         esSimetrica = true;
+        if(n==m){
+            for (int i = 0; i < matrizA.length; i++) {
+                for (int j = 0; j < matrizA[i].length; j++) {
+                    if(i!=j&&matrizA[i][j]!=0){
+                        esDiagonal = false;
+                    }
+                    if(matrizA[i][j]!=matrizAT[i][j]){
+                        esSimetrica=false;
+                    }
+                }
+            }
+        }else {
+           esSimetrica = false;
+           esDiagonal = false;
+        }
+    }
+    
     public static void main(String[] args) {
         OperacionesConMatrices ocm = new OperacionesConMatrices();
-    }
+    } 
 }
